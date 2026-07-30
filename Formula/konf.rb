@@ -1,4 +1,4 @@
-class Cnctl < Formula
+class Konf < Formula
   desc "CLI for Konf - Run your conference."
   homepage "https://konf.app"
   version "2026.07.28-9542f2b"
