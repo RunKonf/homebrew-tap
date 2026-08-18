@@ -25,7 +25,7 @@ jobs:
       - name: Check if formula is already up to date
         id: check
         run: |
-          CURRENT=$(grep '^  version ' Formula/konfctl.rb | sed 's/.*"\(.*\)"/\1/')
+          CURRENT=$(grep '^  version ' Formula/konf.rb | sed 's/.*"\(.*\)"/\1/')
           echo "Current: $CURRENT  Latest: ${{ steps.release.outputs.version }}"
           if [ "$CURRENT" = "${{ steps.release.outputs.version }}" ]; then
             echo "up_to_date=true" >> "$GITHUB_OUTPUT"
@@ -40,10 +40,10 @@ jobs:
           VERSION: ${{ steps.release.outputs.version }}
         run: |
           BASE="https://github.com/RunKonf/konfctl/releases/download/${VERSION}"
-          curl -fsSL "$BASE/konfctl-aarch64-apple-darwin.tar.gz" -o mac_arm.tar.gz
-          curl -fsSL "$BASE/konfctl-x86_64-apple-darwin.tar.gz" -o mac_x86.tar.gz
-          curl -fsSL "$BASE/konfctl-aarch64-unknown-linux-gnu.tar.gz" -o linux_arm.tar.gz
-          curl -fsSL "$BASE/konfctl-x86_64-unknown-linux-gnu.tar.gz" -o linux_x86.tar.gz
+          curl -fsSL "$BASE/konf-aarch64-apple-darwin.tar.gz" -o mac_arm.tar.gz
+          curl -fsSL "$BASE/konf-x86_64-apple-darwin.tar.gz" -o mac_x86.tar.gz
+          curl -fsSL "$BASE/konf-aarch64-unknown-linux-gnu.tar.gz" -o linux_arm.tar.gz
+          curl -fsSL "$BASE/konf-x86_64-unknown-linux-gnu.tar.gz" -o linux_x86.tar.gz
           echo "mac_arm=$(sha256sum mac_arm.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
           echo "mac_x86=$(sha256sum mac_x86.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
           echo "linux_arm=$(sha256sum linux_arm.tar.gz | awk '{print $1}')" >> "$GITHUB_OUTPUT"
@@ -58,39 +58,39 @@ jobs:
           LINUX_ARM_SHA: ${{ steps.sums.outputs.linux_arm }}
           LINUX_X86_SHA: ${{ steps.sums.outputs.linux_x86 }}
         run: |
-          cat > Formula/konfctl.rb << FORMULA
-          class konfctl < Formula
-            desc "Organizer CLI for Cloud Native Days Norway"
-            homepage "https://github.com/RunKonf/konfctl"
+          cat > Formula/konf.rb << FORMULA
+          class Konf < Formula
+            desc "CLI for Konf - Run your conference."
+            homepage "https://konf.app"
             version "${VERSION}"
             license "MIT"
 
             on_macos do
               if Hardware::CPU.arm?
-                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konfctl-aarch64-apple-darwin.tar.gz"
+                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konf-aarch64-apple-darwin.tar.gz"
                 sha256 "${MAC_ARM_SHA}"
               else
-                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konfctl-x86_64-apple-darwin.tar.gz"
+                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konf-x86_64-apple-darwin.tar.gz"
                 sha256 "${MAC_X86_SHA}"
               end
             end
 
             on_linux do
               if Hardware::CPU.arm?
-                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konfctl-aarch64-unknown-linux-gnu.tar.gz"
+                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konf-aarch64-unknown-linux-gnu.tar.gz"
                 sha256 "${LINUX_ARM_SHA}"
               else
-                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konfctl-x86_64-unknown-linux-gnu.tar.gz"
+                url "https://github.com/RunKonf/konfctl/releases/download/${VERSION}/konf-x86_64-unknown-linux-gnu.tar.gz"
                 sha256 "${LINUX_X86_SHA}"
               end
             end
 
             def install
-              bin.install "konfctl"
+              bin.install "konf"
             end
 
             test do
-              assert_match version.to_s, shell_output("#{bin}/konfctl --version")
+              assert_match version.to_s, shell_output("#{bin}/konf --version")
             end
           end
           FORMULA
@@ -100,6 +100,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/konfctl.rb
-          git commit -m "chore: update konfctl to ${{ steps.release.outputs.version }}"
+          git add Formula/konf.rb
+          git commit -m "chore: update konf formula to ${{ steps.release.outputs.version }}"
           git push
