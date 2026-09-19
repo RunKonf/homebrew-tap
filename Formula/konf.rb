@@ -1,26 +1,26 @@
 class Konf < Formula
   desc "CLI for Konf - Run your conference."
   homepage "https://konf.app"
-  version "2026.09.14-1b7c707"
+  version "2026.09.19-23bf708"
   license "MIT"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.14-1b7c707/konf-aarch64-apple-darwin.tar.gz"
-      sha256 "463c86c5767460f90ee965fa080e1a5e3f1376f6de7dc2f0042915d71e94839b"
+      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.19-23bf708/konf-aarch64-apple-darwin.tar.gz"
+      sha256 "959ea9da6f4299275df6f89a4101c7257aa7e77cba88dc3b5cf2263809709a5b"
     else
-      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.14-1b7c707/konf-x86_64-apple-darwin.tar.gz"
-      sha256 "8e04b5f32c5051f9c8401b3536992d47c9ec9708b74b2dae337ed9287567c494"
+      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.19-23bf708/konf-x86_64-apple-darwin.tar.gz"
+      sha256 "3c40956bae227006fc1c33b15dcfcceaa0fdb4f5fa530d51ea91040ceab05e27"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.14-1b7c707/konf-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "6e16a3489640b10e0ad04ce6e8ab875db4b90c372eb5b30fe7caa6e31f2770ea"
+      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.19-23bf708/konf-aarch64-unknown-linux-gnu.tar.gz"
+      sha256 "003f971b2212ee1db11abb136c74ff468e92fb699d9389f2cadfdc4078e3794a"
     else
-      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.14-1b7c707/konf-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "f18362ed89a86d43e1de5453f586e4a12a1119536fbaf2a32d066a8a872e4555"
+      url "https://github.com/RunKonf/konfctl/releases/download/2026.09.19-23bf708/konf-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "a4b0775204db18bc375773839f3953da5ce4cc445378d9b3ef54aa274f38c2f7"
     end
   end
 
